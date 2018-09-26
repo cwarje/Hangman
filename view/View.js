@@ -1,3 +1,4 @@
+/* Handles displaying the game to the screen. */
 let View  = function(model) {
 
   const _template = `
@@ -60,27 +61,28 @@ let View  = function(model) {
   let _$wordDisplay;
   let _$definition;
   let _$guesses;
-  let _model               = model;
-  let _resetButtonEventBus = new EventBus(this);
+  let _model                  = model;
+  let _resetButtonEventBus    = new EventBus(this);
   let _alphabetButtonEventBus = new EventBus(this);
 
-  //
+  // Create the document object mall.
   function buildDomTree() {
-    _$              = $(_template.trim());
-    _$alphabetButton     = _$.find(".alphabet-view-button");
-    _$resetButton   = _$.find(".reset-view-button");
-    _$wordDisplay   = _$.find(".word-view-display");
-    _$definition    = _$.find(".definition-view-display");
-    _$guesses       = _$.find(".guesses-view-display");
-    _$score         = _$.find('.score-view-display');
+    _$               = $(_template.trim());
+    _$alphabetButton = _$.find(".alphabet-view-button");
+    _$resetButton    = _$.find(".reset-view-button");
+    _$wordDisplay    = _$.find(".word-view-display");
+    _$definition     = _$.find(".definition-view-display");
+    _$guesses        = _$.find(".guesses-view-display");
+    _$score          = _$.find('.score-view-display');
   }
 
-  // 
+  // Set the GUI event handlers.
   function setupGuiEventHandlers(self) {
     _$resetButton.click(_resetButtonEventBus.notify.bind(self));
     _$alphabetButton.click(_alphabetButtonEventBus.notify.bind(self));
   }
-  // 
+
+  // Set the model event handlers.
   function setupModelEventHandlers(self) {
     _model.wordUpdateEventBus.onEvent(updateGui.bind(self));
     _model.definitionEventBus.onEvent(updateGui.bind(self));
@@ -88,11 +90,11 @@ let View  = function(model) {
     _model.scoreEventBus.onEvent(updateGui.bind(self));
   }
 
-  // 
+  // Update the GUI when data changes.
   function updateGui() {
     _$wordDisplay.html(model.getGuessedWord());
     _$definition.html(model.getDefinition());
-    _$guesses.html("Guess " + model.getGuesses() + "/7");
+    _$guesses.html("Guess " + model.getGuesses() + "/" + MAX_GUESSES);
     _$score.html("Score: " + model.getScore());
   }
 

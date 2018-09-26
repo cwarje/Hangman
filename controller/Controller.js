@@ -1,4 +1,4 @@
-/*  */
+/* Handles logic based on events. */
 let Controller = function(model, view) {
   let _model  = model;
   let _view   = view;
@@ -152,3 +152,16 @@ let Controller = function(model, view) {
   // Setup
   setupViewEventHandlers(this);
 }
+
+/* jQuery for button disabling and enabling. */
+$(document).ready(function () {
+  // Disable the button when clicked.
+  $('.disable').click(function () {
+    $(this).prop('disabled', true);
+  });
+
+  // Enabled all the buttons on a game restart.
+  $('.reset-view-button').click(function () {
+    $('.disable').prop('disabled', false);
+  });
+})

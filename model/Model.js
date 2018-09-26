@@ -1,4 +1,4 @@
-/*  */
+/* Handles storing and retrieving the game data. */
 let Model = function() {
   let _guesses = 0;
   let _correctWord;
