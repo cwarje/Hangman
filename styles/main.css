@@ -1,0 +1,24 @@
+.word-view-display {
+    letter-spacing: 6px;
+}
+
+.btn-success {
+    margin-top: 7px;
+}
+
+.card {
+    margin: 25px;
+}
+
+html {
+    background:rgb(119, 201, 119);
+}
+
+.app-container {
+    background:rgb(119, 201, 119);
+}
+
+.card-header {
+    font-size: 2.5em;
+    color:rgb(8, 139, 8);
+}
