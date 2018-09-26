@@ -1,3 +1,4 @@
+/*  */
 let Model = function() {
   let _guesses = 0;
   let _correctWord;
@@ -49,8 +50,9 @@ let Model = function() {
     },
   ];
 
-  //so that the game starts with a random word.
-  function startGame() {
+  // Sorts the initial word to display
+  // to make it 
+  function getRandomWord() {
     let numWords = _dictionary.length;
     var indexOfNewWord = Math.floor((Math.random() * numWords));
     getNewWord(indexOfNewWord);
@@ -130,7 +132,7 @@ let Model = function() {
   this.definitionEventBus = _definitionEventBus;
   this.guessesEventBus = _guessesEventBus;
   this.scoreEventBus = _scoreEventBus;
-  this.startGame = startGame;
+  this.getRandomWord = getRandomWord;
   this.getGuesses = getGuesses;
   this.getScore = getScore;
   this.increaseScore = increaseScore;

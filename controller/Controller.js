@@ -1,12 +1,15 @@
+/*  */
 let Controller = function(model, view) {
   let _model  = model;
   let _view   = view;
 
+  //
   function setupViewEventHandlers(self) {
     _view.resetButtonEventBus.onEvent(newWordLogic.bind(self));
     _view.alphabetButtonEventBus.onEvent(letterPressedLogic.bind(self));
   }
 
+  //
   function letterPressedLogic() {
     let letter = buttonP.target.value;
     switch (letter) {
@@ -93,6 +96,7 @@ let Controller = function(model, view) {
     }
   }
 
+  //
   function handleLetterPress(guessedLetter) {
     let correctWord = _model.getWord();
     let numGuesses;
@@ -112,6 +116,7 @@ let Controller = function(model, view) {
     determineOutcome(newGuessedWord, correctWord, numGuesses);
   }
 
+  //
   function determineOutcome(newGuessedWord, correctWord, numGuesses) {
     if (numGuesses <= MAX_GUESSES && newGuessedWord === correctWord) {
       window.alert("Congratulations, you win!");
@@ -119,7 +124,6 @@ let Controller = function(model, view) {
       window.alert("Game over.");
     }
   }
-
 
   // 
   function updateGuessedWord(guessedLetter, cw) {
@@ -134,6 +138,7 @@ let Controller = function(model, view) {
     _model.setGuessedWord(newString);
   }
 
+  //
   function newWordLogic() {
     let numWords = 5;
     var indexOfNewWord = Math.floor((Math.random() * numWords));

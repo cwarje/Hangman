@@ -64,6 +64,7 @@ let View  = function(model) {
   let _resetButtonEventBus = new EventBus(this);
   let _alphabetButtonEventBus = new EventBus(this);
 
+  //
   function buildDomTree() {
     _$              = $(_template.trim());
     _$alphabetButton     = _$.find(".alphabet-view-button");
@@ -74,11 +75,12 @@ let View  = function(model) {
     _$score         = _$.find('.score-view-display');
   }
 
+  // 
   function setupGuiEventHandlers(self) {
     _$resetButton.click(_resetButtonEventBus.notify.bind(self));
     _$alphabetButton.click(_alphabetButtonEventBus.notify.bind(self));
   }
-
+  // 
   function setupModelEventHandlers(self) {
     _model.wordUpdateEventBus.onEvent(updateGui.bind(self));
     _model.definitionEventBus.onEvent(updateGui.bind(self));
@@ -86,6 +88,7 @@ let View  = function(model) {
     _model.scoreEventBus.onEvent(updateGui.bind(self));
   }
 
+  // 
   function updateGui() {
     _$wordDisplay.html(model.getGuessedWord());
     _$definition.html(model.getDefinition());
@@ -97,7 +100,7 @@ let View  = function(model) {
   buildDomTree();
   setupGuiEventHandlers(this);
   setupModelEventHandlers(this);
-  model.startGame();
+  model.getRandomWord();
   updateGui();
 
   // Public API
