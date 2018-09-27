@@ -53,6 +53,7 @@ let View  = function(model) {
     </div>
   </div>
   </div>
+  <span class="label label-default outcome-view-display"></span>
 </div>
   `;
 
@@ -61,6 +62,7 @@ let View  = function(model) {
   let _$wordDisplay;
   let _$definition;
   let _$guesses;
+  let _$outcome;
   let _model                  = model;
   let _resetButtonEventBus    = new EventBus(this);
   let _alphabetButtonEventBus = new EventBus(this);
@@ -73,7 +75,8 @@ let View  = function(model) {
     _$wordDisplay    = _$.find(".word-view-display");
     _$definition     = _$.find(".definition-view-display");
     _$guesses        = _$.find(".guesses-view-display");
-    _$score          = _$.find('.score-view-display');
+    _$score          = _$.find(".score-view-display");
+    _$outcome        = _$.find(".outcome-view-display");
   }
 
   // Set the GUI event handlers.
@@ -88,6 +91,7 @@ let View  = function(model) {
     _model.definitionEventBus.onEvent(updateGui.bind(self));
     _model.guessesEventBus.onEvent(updateGui.bind(self));
     _model.scoreEventBus.onEvent(updateGui.bind(self));
+    _model.outcomeEventBus.onEvent(updateGui.bind(self));
   }
 
   // Update the GUI when data changes.
@@ -96,6 +100,7 @@ let View  = function(model) {
     _$definition.html(model.getDefinition());
     _$guesses.html("Guess " + model.getGuesses() + "/" + MAX_GUESSES);
     _$score.html("Score: " + model.getScore());
+    _$outcome.html(model.getOutcome());
   }
 
   // Setup.

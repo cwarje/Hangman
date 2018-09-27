@@ -22,3 +22,8 @@ html {
     font-size: 2.5em;
     color:rgb(8, 139, 8);
 }
+
+.outcome-view-display {
+    text-align: center;
+    font-size: 1.4em;
+}

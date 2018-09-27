@@ -107,8 +107,11 @@ let Controller = function(model, view) {
        _model.incrementGuesses();
       _model.decreaseScore();
     } else {
-      updateGuessedWord(guessedLetter, correctWord);
-      _model.increaseScore();
+      let numCorrectCharacter = updateGuessedWord(guessedLetter, correctWord);
+      let i;
+      for (i = 0; i < numCorrectCharacter; i++) {
+        _model.increaseScore();
+      }
     }
 
     newGuessedWord = _model.getGuessedWord();
@@ -119,25 +122,34 @@ let Controller = function(model, view) {
   // Determines the result of the finished game.
   // Alerts the user.
   function determineOutcome(newGuessedWord, correctWord, numGuesses) {
-    if (numGuesses <= MAX_GUESSES && newGuessedWord === correctWord) {
-      window.alert("Congratulations, you win!");
-    } else if (numGuesses === 7) {
-      window.alert("Game over.");
+    if (newGuessedWord === correctWord) {
+      // window.alert("Congratulations, you win!");
+      _model.setOutcome("YOU WIN");
+    } else if (numGuesses === MAX_GUESSES) {
+      // window.alert("Game over.");
+      _model.setOutcome("YOU LOSE");
+    } else {
+      _model.setOutcome("");
     }
+
   }
 
   // Determines if a guess is correct and
   // updates the guessed word with the correct letter.
+  // Returns the number of occurences of the letter.
   function updateGuessedWord(guessedLetter, cw) {
     let guessedWord = _model.getGuessedWord();
     var newString = guessedWord;
+    let n = 0;
     for (var i = 0; i < cw.length; i++) {
       if (cw.charAt(i) === guessedLetter && guessedWord.charAt(i) === '_') {
         newString = replaceAt(guessedWord, i, guessedLetter);
         guessedWord = newString;
+        n++;
       }
     }
     _model.setGuessedWord(newString);
+    return n;
   }
 
   // Gets a new word from the Model.

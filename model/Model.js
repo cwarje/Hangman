@@ -2,12 +2,14 @@
 let Model = function() {
   let _guesses = 0;
   let _score = 0;
+  let _outcome = "";
   let _correctWord;
   let _guessedWord;
   let _wordUpdateEventBus = new EventBus(this);
   let _definitionEventBus = new EventBus(this);
   let _guessesEventBus    = new EventBus(this);
   let _scoreEventBus      = new EventBus(this);
+  let _outcomeEventBus    = new EventBus(this);
   let _dictionary = [
     {
       word: "tattoo",
@@ -81,6 +83,8 @@ let Model = function() {
   function resetGameData() {
     resetGuessedWord();
     resetGuesses();
+    setOutcome("");
+    _outcomeEventBus.notify();
   }
 
   // Set the guessed word's characters to all underscores.
@@ -143,6 +147,19 @@ let Model = function() {
     _scoreEventBus.notify();
   }
 
+  // Set the outcome of the game.
+  function setOutcome(outcome) {
+    _outcome = outcome;
+    _outcomeEventBus.notify();
+  }
+
+  // Return the outcome of the game.
+  function getOutcome() {
+    return _outcome;
+  }
+
+
+
   // Making methods available.
   this.incrementGuesses = incrementGuesses;
   this.getNewWord = getNewWord;
@@ -152,12 +169,15 @@ let Model = function() {
   this.getGuessedWord = getGuessedWord;
   this.wordUpdateEventBus = _wordUpdateEventBus;
   this.definitionEventBus = _definitionEventBus;
+  this.outcomeEventBus = _outcomeEventBus;
   this.guessesEventBus = _guessesEventBus;
   this.scoreEventBus = _scoreEventBus;
   this.getRandomWord = getRandomWord;
   this.getGuesses = getGuesses;
   this.getScore = getScore;
+  this.getOutcome = getOutcome;
   this.increaseScore = increaseScore;
   this.decreaseScore = decreaseScore;
   this.getDictionaryLength = getDictionaryLength;
+  this.setOutcome = setOutcome;
 };
