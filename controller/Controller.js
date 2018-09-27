@@ -123,15 +123,12 @@ let Controller = function(model, view) {
   // Alerts the user.
   function determineOutcome(newGuessedWord, correctWord, numGuesses) {
     if (newGuessedWord === correctWord) {
-      // window.alert("Congratulations, you win!");
       _model.setOutcome("YOU WIN");
     } else if (numGuesses === MAX_GUESSES) {
-      // window.alert("Game over.");
       _model.setOutcome("YOU LOSE");
     } else {
       _model.setOutcome("");
     }
-
   }
 
   // Determines if a guess is correct and
@@ -139,9 +136,9 @@ let Controller = function(model, view) {
   // Returns the number of occurences of the letter.
   function updateGuessedWord(guessedLetter, cw) {
     let guessedWord = _model.getGuessedWord();
-    var newString = guessedWord;
+    let newString = guessedWord;
     let n = 0;
-    for (var i = 0; i < cw.length; i++) {
+    for (let i = 0; i < cw.length; i++) {
       if (cw.charAt(i) === guessedLetter && guessedWord.charAt(i) === '_') {
         newString = replaceAt(guessedWord, i, guessedLetter);
         guessedWord = newString;
@@ -155,7 +152,7 @@ let Controller = function(model, view) {
   // Gets a new word from the Model.
   function newWordLogic() {
     let numWords = _model.getDictionaryLength();
-    var indexOfNewWord = Math.floor((Math.random() * numWords));
+    let indexOfNewWord = Math.floor((Math.random() * numWords));
     _model.getNewWord(indexOfNewWord);
   }
 
