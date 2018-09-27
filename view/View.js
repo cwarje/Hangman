@@ -98,14 +98,14 @@ let View  = function(model) {
     _$score.html("Score: " + model.getScore());
   }
 
-  // Setup
+  // Setup.
   buildDomTree();
   setupGuiEventHandlers(this);
   setupModelEventHandlers(this);
   model.getRandomWord();
   updateGui();
 
-  // Public API
+  // Make methods available.
   this.$ = _$[0];
   this.resetButtonEventBus = _resetButtonEventBus;
   this.alphabetButtonEventBus = _alphabetButtonEventBus;

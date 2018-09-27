@@ -3,13 +3,13 @@ let Controller = function(model, view) {
   let _model  = model;
   let _view   = view;
 
-  //
+  // Set up View event handlers.
   function setupViewEventHandlers(self) {
     _view.resetButtonEventBus.onEvent(newWordLogic.bind(self));
     _view.alphabetButtonEventBus.onEvent(letterPressedLogic.bind(self));
   }
 
-  //
+  // Determines which button was pressed and runs that logic.
   function letterPressedLogic() {
     let letter = buttonP.target.value;
     switch (letter) {
@@ -96,7 +96,8 @@ let Controller = function(model, view) {
     }
   }
 
-  //
+  // Determines if the word includes the users guessed letter
+  // and updates the score and the UI accordingly.
   function handleLetterPress(guessedLetter) {
     let correctWord = _model.getWord();
     let numGuesses;
@@ -107,7 +108,6 @@ let Controller = function(model, view) {
       _model.decreaseScore();
     } else {
       updateGuessedWord(guessedLetter, correctWord);
-      _model.incrementGuesses(); // Remove this line for the classic hangman rules.
       _model.increaseScore();
     }
 
@@ -116,7 +116,8 @@ let Controller = function(model, view) {
     determineOutcome(newGuessedWord, correctWord, numGuesses);
   }
 
-  //
+  // Determines the result of the finished game.
+  // Alerts the user.
   function determineOutcome(newGuessedWord, correctWord, numGuesses) {
     if (numGuesses <= MAX_GUESSES && newGuessedWord === correctWord) {
       window.alert("Congratulations, you win!");
@@ -125,7 +126,8 @@ let Controller = function(model, view) {
     }
   }
 
-  // 
+  // Determines if a guess is correct and
+  // updates the guessed word with the correct letter.
   function updateGuessedWord(guessedLetter, cw) {
     let guessedWord = _model.getGuessedWord();
     var newString = guessedWord;
@@ -138,18 +140,18 @@ let Controller = function(model, view) {
     _model.setGuessedWord(newString);
   }
 
-  //
+  // Gets a new word from the Model.
   function newWordLogic() {
-    let numWords = 5;
+    let numWords = _model.getDictionaryLength();
     var indexOfNewWord = Math.floor((Math.random() * numWords));
     _model.getNewWord(indexOfNewWord);
   }
 
+  // Replaces the character in a string at the index specified.
   function replaceAt(string, index, replace) {
     return string.substring(0, index) + replace + string.substring(index + 1);
   }
 
-  // Setup
   setupViewEventHandlers(this);
 }
 

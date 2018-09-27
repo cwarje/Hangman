@@ -1,12 +1,13 @@
 /* Handles storing and retrieving the game data. */
 let Model = function() {
   let _guesses = 0;
+  let _score = 0;
   let _correctWord;
   let _guessedWord;
   let _wordUpdateEventBus = new EventBus(this);
   let _definitionEventBus = new EventBus(this);
-  let _guessesEventBus = new EventBus(this);
-  let _scoreEventBus = new EventBus(this);
+  let _guessesEventBus    = new EventBus(this);
+  let _scoreEventBus      = new EventBus(this);
   let _dictionary = [
     {
       word: "tattoo",
@@ -50,78 +51,99 @@ let Model = function() {
     },
   ];
 
-  // Sorts the initial word to display
-  // to make it 
-  function getRandomWord() {
+  // Gets the number of words in the dictionary.
+  function getDictionaryLength() {
     let numWords = _dictionary.length;
+    return numWords;
+  }
+
+  // Gets a random word from the dictionary.
+  function getRandomWord() {
+    let numWords = getDictionaryLength();
     var indexOfNewWord = Math.floor((Math.random() * numWords));
     getNewWord(indexOfNewWord);
   }
 
+  // Gets a new word from the dictionary at a specified index.
   function getNewWord(index) {
     _correctWord = _dictionary[index].word;
     _definition = _dictionary[index].definition;
-    resetGuessedWord();
-    resetGuesses();
-    resetScore();
+
+    // When a new word is requested, the game needs to  be reset.
+    resetGameData();
+
+    // Notify the View about the changes.
     _wordUpdateEventBus.notify();
     _definitionEventBus.notify();
   }
 
-  function resetGuessedWord() {
-    let cWord = getWord();
-    _guessedWord = cWord.replace(/./g, '_');
+  // Calls functions to reset the game.
+  function resetGameData() {
+    resetGuessedWord();
+    resetGuesses();
   }
 
+  // Set the guessed word's characters to all underscores.
+  function resetGuessedWord() {
+    let correctWord = getWord();
+    _guessedWord = correctWord.replace(/./g, '_');
+  }
+
+  // Sets the sets the word being guessed to the word specified.
   function setGuessedWord(updatedGuessedWord) {
     _guessedWord = updatedGuessedWord;
     _wordUpdateEventBus.notify();
   }
 
+  // Increment the number of guesses and notify the View.
   function incrementGuesses() {
     _guesses++;
     _guessesEventBus.notify();
   }
 
+  // Gets the correct word being guessed.
   function getWord() {
     return _correctWord;
   }
 
+  // Gets the word being guessed.
   function getGuessedWord() {
     return _guessedWord;
   }
 
+  // Gets the current definition.
   function getDefinition() {
     return _definition;
   }
 
+  // Gets the number of guesses.
   function getGuesses() {
     return _guesses;
   }
 
+  // Resets the number of guesses.
   function resetGuesses() {
     _guesses = 0;
   }
 
+  // Gets the user's score.
   function getScore() {
     return _score;
   }
 
+  // Decreases the user's score.
   function decreaseScore() {
     _score--;
     _scoreEventBus.notify();
   }
 
+  // Increases the user's score.
   function increaseScore() {
     _score++;
     _scoreEventBus.notify();
   }
 
-  function resetScore() {
-    _score = 0;
-  }
-
-  // Public API
+  // Making methods available.
   this.incrementGuesses = incrementGuesses;
   this.getNewWord = getNewWord;
   this.getWord = getWord;
@@ -137,4 +159,5 @@ let Model = function() {
   this.getScore = getScore;
   this.increaseScore = increaseScore;
   this.decreaseScore = decreaseScore;
+  this.getDictionaryLength = getDictionaryLength;
 };
